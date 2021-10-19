@@ -1,9 +1,9 @@
-# Stellar Vanity
+# Pi Network Vanity
 
 ![](https://img.shields.io/crates/v/stellar_vanity)
 ![](https://img.shields.io/librariesio/release/cargo/stellar_vanity)
 
-A simple CLI tool to generate Stellar vanity addresses.
+A simple CLI tool to generate Pi Network vanity addresses.
 
 **Vanity Address:** similar to a vanity license plate, a vanity cryptocurrency address is an
 address where either the beginning (prefix) or end (postfix) is a special or meaningful phrase.
@@ -37,8 +37,8 @@ using all 96 vCPUs. Below are his results with a `96` thread and `10` sample con
 
 Ah, thanks so much! I have limited computing power (if you do too... do not attempt, will likely be long and costly)
 
-1. `git clone https://github.com/robertDurst/stellar-vanity-address-generator.git`
-2. `cd stellar-vanity-address-generator`
+1. `git clone https://github.com/palinko91/pi-network-vanity-address-generator.git`
+2. `cd pi-network-vanity-address-generator`
 3. `cargo bench`
 
 **Benchmark Configurations:**
@@ -50,7 +50,7 @@ Ah, thanks so much! I have limited computing power (if you do too... do not atte
 
 ## How to use library:
 ```
-use stellar_vanity::vanity_key::AddressGenerator, deserialize_public_key};;
+use pi_network_vanity::vanity_key::AddressGenerator, deserialize_public_key};;
 
 let mut generator: AddressGenerator = Default::default();
 let keypair = generator.find(|key| {
