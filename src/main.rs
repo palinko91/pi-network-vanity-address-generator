@@ -1,6 +1,9 @@
 extern crate clap;
 extern crate regex;
-extern crate stellar_vanity;
+extern crate pi_network_vanity;
+extern crate stellar_base;
+extern crate bip39;
+extern crate slip10_ed25519;
 #[macro_use]
 extern crate fstrings;
 
@@ -8,8 +11,13 @@ use std::sync::{mpsc, Arc};
 use std::thread;
 use std::time::Instant;
 
+use bip39::Mnemonic;
+use bip39::Language;
+use stellar_base::crypto::decode_secret_seed;
+use slip10_ed25519::derive_ed25519_private_key;
+
 use clap::{App, Arg};
-use stellar_vanity::vanity_key::{
+use pi_network_vanity::vanity_key::{
     deserialize_private_key, deserialize_public_key, optimized_prefix_deserialize_public_key,
     AddressGenerator,
 };
@@ -17,10 +25,10 @@ use stellar_vanity::vanity_key::{
 use regex::Regex;
 
 fn main() {
-    let matches = App::new("Stellar Vanity Address Generator")
-        .version("0.4.0")
-        .author("Rob Durst et al.")
-        .about("A simple CLI for generating Stellar Vanity Addresses.")
+    let matches = App::new("Pi Network Vanity Address Generator")
+        .version("0.0.1")
+        .author("Rob Durst , Arpad Palinkas.")
+        .about("A simple CLI for generating Pi Network Vanity Addresses.")
         .arg(
             Arg::with_name("POSTFIX")
                 .long("postfix")
@@ -107,7 +115,48 @@ fn main() {
     let private_key = deserialize_private_key(&keypair);
 
     println!(
-        "\nSUCCESS!\nPublic Key: {:?}\nSecret Key: {:?}\n\nFound in {:?}",
+        "\nSUCCESS!\nPublic Key: {:?}\nSecret Key: {:?}\n\nFound in {:?}\n\n",
         public_key, private_key, duration
     );
+
+    //Storing the secret key for further processing
+    let secret:String = private_key.to_string();
+
+    //Secret key string to mnemonic words function for Stellar
+    fn secret_to_stellar_mnemonic(secretkey:&String)->String {
+        //Decode the secret key to bytes
+        let kp = decode_secret_seed(&secretkey).unwrap();
+        //Get the mnemonic positions from the entropy
+        #[allow(non_snake_case)]
+        let mnemo =  match Mnemonic::from_entropy_in(Language::English,&kp){
+            Ok(Mnemonic)=> Mnemonic,
+            Err(_)=> panic!("will be handled"),
+        };
+        //Make the actual words from the mnemonic positions
+        let englishwords = Mnemonic::to_string(&mnemo);
+        return englishwords;
+    }
+    let stellar_mnemo = secret_to_stellar_mnemonic(&secret);
+    println!("Stellar mnemonic:  {:?}",stellar_mnemo);
+    println!("\n");
+
+    //Secret key string to mnemonic words function for Pi Network with derivated path
+    fn secret_to_pi_mnemonic(secretkey:&String)->String{
+        //Decode the secret key to bytes
+        let kp = decode_secret_seed(&secretkey).unwrap();
+        //Apply the derivation path for the byte secret key
+        let derived = derive_ed25519_private_key(&kp, &vec!(44, 314159, 0));
+        //Get the mnemonic positions from the entropy
+        #[allow(non_snake_case)]
+        let mnemo =  match Mnemonic::from_entropy_in(Language::English,&derived){
+            Ok(Mnemonic)=> Mnemonic,
+            Err(_)=> panic!("will be handled"),
+        };
+        //Make the actual words from the mnemonic positions
+        let englishwords = Mnemonic::to_string(&mnemo);
+        return englishwords;
+    }
+    let pi_mnemo = secret_to_pi_mnemonic(&secret);
+    println!("Pi Network mnemonic:  {:?}",pi_mnemo);
+    println!("\n");
 }

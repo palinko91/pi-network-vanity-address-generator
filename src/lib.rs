@@ -1,6 +1,6 @@
-//! <h1> Stellar Vanity </h1>
+//! <h1> Pi Network Vanity </h1>
 //!
-//! This is a simple CLI tool for generating Stellar vanity addresses.
+//! This is a simple CLI tool for generating Pi Network vanity addresses.
 //!
 //! **Vanity Address:** similar to a vanity license plate, a vanity cryptocurrency address is an
 //! address where either the beginning (prefix) or end (postfix) is a special or meaningful phrase.
@@ -13,7 +13,7 @@
 //!
 //! # Examples
 //! ```
-//! stellar_vanity AAA // Where AAA is the desired postfix
+//! pi_network_vanity AAA // Where AAA is the desired postfix
 //! ```
 
 extern crate base32;
@@ -23,5 +23,8 @@ extern crate crc16;
 extern crate ed25519_dalek;
 extern crate rand;
 extern crate rand_core;
+extern crate stellar_base;
+extern crate bip39;
+extern crate slip10_ed25519;
 
 pub mod vanity_key;

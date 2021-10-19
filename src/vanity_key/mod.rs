@@ -7,14 +7,14 @@ use ed25519_dalek::Keypair;
 use rand::Rng;
 use rand_core::{impls, CryptoRng, Error, RngCore};
 
-/// Stellar vanity address generator.
+/// Pi Network vanity address generator.
 ///
 /// <h1> Example </h1>
 ///
 /// <h3> Sample Code: </h3>
 ///
 /// ````
-/// use stellar_vanity::vanity_key::AddressGenerator, deserialize_public_key};;
+/// use pi_network_vanity::vanity_key::AddressGenerator, deserialize_public_key};;
 ///
 /// let mut generator: AddressGenerator = Default::default();
 /// let keypair = generator.find(|key| {
