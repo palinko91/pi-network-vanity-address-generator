@@ -137,7 +137,7 @@ fn main() {
         return englishwords;
     }
     let stellar_mnemo = secret_to_stellar_mnemonic(&secret);
-    println!("Stellar mnemonic:  {:?}",stellar_mnemo);
+    println!("Stellar mnemonic:  {}",stellar_mnemo);
     println!("\n");
 
     //Secret key string to mnemonic words function for Pi Network with derivated path
@@ -157,6 +157,6 @@ fn main() {
         return englishwords;
     }
     let pi_mnemo = secret_to_pi_mnemonic(&secret);
-    println!("Pi Network mnemonic:  {:?}",pi_mnemo);
+    println!("Pi Network mnemonic:  {}",pi_mnemo);
     println!("\n");
 }
