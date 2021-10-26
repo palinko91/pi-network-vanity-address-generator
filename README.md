@@ -83,7 +83,7 @@ cargo run -- -c=8 --postfix='[0-9]joe'
 ```
 
 ## What if I want to know my Public and Secret keypair from the Pi Mnemonic?
-```
+
 In that case you can use [pi_keypair_from_mnemonic.rs](https://github.com/palinko91/pi-network-vanity-address-generator/tree/master/src/pi_keypair_from_mnemonic.rs).
-```
+
 
